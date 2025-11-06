@@ -1,0 +1,12 @@
+<html lang="en">
+<%- include("./partials/head.ejs") %>
+
+<body>
+  <%- include("./partials/nav.ejs") %>
+
+  <h1>Protected Page</h1>
+  <p>Welcome to the protected page, <%= user.username %>! you figured it out!</p>
+
+  <%- include("./partials/footer.ejs") %>
+</body>
+</html>
