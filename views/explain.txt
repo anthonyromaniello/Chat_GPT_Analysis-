@@ -59,3 +59,6 @@ and use Chart.js to render the charts based on /api/results.
 I removed node_modules from GitHub because it should not be tracked.
 It is auto-generated and makes the repo unnecessarily large.
 Just use npm install to recreate it.
+
+
+When you write code, please let me know if you find any framework that needs to be supplemented. I will modify it.
