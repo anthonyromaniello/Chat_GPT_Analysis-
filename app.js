@@ -9,13 +9,12 @@ const users = {
 // express app
 const app = express();
 
-// listen for requests
-app.listen(3000);
+
 
 // register view engine
 app.set('view engine', 'ejs');
 
-
+/** authentication function if used
 function checkLogin(username, password) {
   if (!users[username]) {
     return false;
@@ -25,6 +24,7 @@ function checkLogin(username, password) {
   }
   return true;
 }
+*/ 
 
 // middleware & static files
 app.use(express.static('public'));
@@ -49,6 +49,7 @@ app.use((req, res, next) => {
   next();
 });
 
+/** authentication function if used
 function authenticateUser(req, res, next) {
   const username = req.body.username;
   const password = req.body.password;
@@ -65,6 +66,7 @@ function authenticateUser(req, res, next) {
     res.status(401).send('Invalid username or password');
   }
 }
+*/
 
 //urlencoded is a built-in middleware function in Express. It parses incoming requests with urlencoded payloads and is based on body-parser.
 //it reads form data from POST requests 
@@ -76,37 +78,27 @@ app.post('/test', (req, res) => {
   res.send('Data logged to console');
 });
 
-
 app.get('/', (req, res) => {
-  const blogs = [
-    {title: 'Yoshi finds eggs', snippet: 'Lorem ipsum dolor sit amet consectetur'},
-    {title: 'Mario finds stars', snippet: 'Lorem ipsum dolor sit amet consectetur'},
-    {title: 'How to defeat bowser', snippet: 'Lorem ipsum dolor sit amet consectetur'},
-  ];
-  res.render('index', { title: 'Home', blogs });
+  res.render('index', { title: 'Home' });
 });
 
-app.get('/about', (req, res) => {
-  res.render('about', { title: 'About' });
+app.get('/education', (req, res) => {
+  res.render('education', { title: 'Education' });
 });
 
-app.get('/blogs/create', (req, res) => {
-  res.render('create', { title: 'Create a new blog' });
-
-});
-app.get('/profile', (req, res) => {
-  res.render('profile', {title: 'Your Profile'});
+app.get('/experience', (req, res) => {
+  res.render('experience', { title: 'Experience' });
 });
 
-app.get('/protected', authenticateUser, (req,res) => {
-  res.render('protected', {title: 'Login-Needed page', user: req.user});
-});
-
-app.post('/login', authenticateUser, (req, res) => {
-  res.send(`Welcome ${req.user.username}! you are now logged in.`);
+app.get('/project', (req, res) => {
+  res.render('project', { title: 'Project' });
 });
 
 // 404 page 
 app.use((req, res) => {
   res.status(404).render('404', { title: '404' });
 });
+
+
+// listen for requests
+app.listen(3000);
