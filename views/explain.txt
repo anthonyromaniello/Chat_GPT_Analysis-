@@ -1,0 +1,53 @@
+Front-end skeleton is ready. Here are the hooks you can code against:
+
+1.GET /api/add
+
+Called from the Project page “Test /api/add” section.
+
+Request format: /api/add?a=<number>&b=<number>
+
+Expected response JSON:
+{ "result": <number> }
+
+
+2.GET /api/results
+
+Called when the user clicks “Load Results” in the Results section.
+
+Expected response JSON (example shape):
+[
+  { "domain": "History", "accuracy": 0.82, "avgTime": 1.3 },
+  { "domain": "Social Science", "accuracy": 0.76, "avgTime": 1.6 },
+  { "domain": "Computer Security", "accuracy": 0.70, "avgTime": 1.9 }
+]
+
+
+This will be passed into window.drawCharts(data) by the front-end.
+
+3. WebSocket
+
+The frontend connects to: ws://localhost:3000
+
+When the user clicks “Start Evaluation”, the frontend sends:
+{ "type": "start-eval" }
+
+
+Any messages you broadcast from the server will be appended to the #wsMessages div as plain text, so you can send progress updates like:
+
+"Starting evaluation for History..."
+
+"Finished Social Science, accuracy: 0.78"
+
+4. Charts
+
+The canvases are already in the DOM:
+
+#accuracyChart
+
+#timeChart
+
+You can write a charts.js file that defines:
+window.drawCharts = function(data) { ... }
+
+
+and use Chart.js to render the charts based on /api/results.
