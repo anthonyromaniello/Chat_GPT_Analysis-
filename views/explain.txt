@@ -51,3 +51,11 @@ window.drawCharts = function(data) { ... }
 
 
 and use Chart.js to render the charts based on /api/results.
+
+
+
+
+！！！
+I removed node_modules from GitHub because it should not be tracked.
+It is auto-generated and makes the repo unnecessarily large.
+Just use npm install to recreate it.
