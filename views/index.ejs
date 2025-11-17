@@ -3,23 +3,18 @@
 
 <body>
   <%- include("./partials/nav.ejs") %>
+<!--Frontend:Dynamic Assistant(Darrell)-->
+<div id ="assistant-bubble">
+  <div class="avatar">AI</div>
+  <div class="text" id="assistant-text">Loading...</div>
+</div>
 
-  <div class="blogs content">
-    <h2>All Blogs</h2>
+<!--Frontend:Hash Routing Container
+    all page(/about, /education, /experience,and /project.)
+    by main.js-->
+<main id="content"></main>
 
-    <% if (blogs.length > 0) { %>
-      <% blogs.forEach(blog => { %>
-
-        <h3 class="title"><%= blog.title %></h3>
-        <p class="snippet"><%= blog.snippet %></p>
-
-      <% }) %>
-    <% } else { %>
-      <p>There are no blogs to display...</p>
-    <% } %>
-    
-  </div>
-
-  <%- include("./partials/footer.ejs") %>
+<%- include("./partials/footer.ejs") %>
+<script src="/js/main.js"></Script>
 </body>
 </html>
