@@ -1,30 +1,15 @@
+//Express Server-side code -Anthony
+
 const express = require('express');
 const morgan = require('morgan');
-const users = {
-  'admin': 'password123',
-  'john': 'mypass',
-  'jane': 'secret'
-};
+const http = require('http');
+const WebSocket = require('ws')
 
 // express app
 const app = express();
 
-
-
 // register view engine
 app.set('view engine', 'ejs');
-
-/** authentication function if used
-function checkLogin(username, password) {
-  if (!users[username]) {
-    return false;
-  }
-  if (users[username] !== password) {
-    return false;
-  }
-  return true;
-}
-*/ 
 
 // middleware & static files
 app.use(express.static('public'));
@@ -48,25 +33,6 @@ app.use((req, res, next) => {
   res.locals.path = req.path;
   next();
 });
-
-/** authentication function if used
-function authenticateUser(req, res, next) {
-  const username = req.body.username;
-  const password = req.body.password;
-
-  if (!username || !password) {
-    return res.status(400).send('Username and password are required');
-  }
-
-  if (checkLogin(username, password)) {
-    req.user = { username };
-    console.log(`User ${username} authenticated successfully`);
-    res.render ('protected', { title: 'Login-Needed page', user: req.user });
-  } else {
-    res.status(401).send('Invalid username or password');
-  }
-}
-*/
 
 //urlencoded is a built-in middleware function in Express. It parses incoming requests with urlencoded payloads and is based on body-parser.
 //it reads form data from POST requests 
@@ -94,11 +60,45 @@ app.get('/project', (req, res) => {
   res.render('project', { title: 'Project' });
 });
 
+app.get('/api/add', (req, res,) => {
+
+  if (!req.query.a || !req.query.b) {
+    return res.status(400).json({ error: "Both a and b are required" });
+  }
+  let numA = parseInt(req.query.a);
+  let numB = parseInt(req.query.b);
+
+  let result = numA + numB;
+  res.json({"result" : result});
+
+})
+
 // 404 page 
 app.use((req, res) => {
   res.status(404).render('404', { title: '404' });
 });
 
+
+const server = http.createServer(app);
+const ww = new WebSocket.Server({ server });
+
+wss.on('connection', (ws) => {
+  console.log('client connnected');
+  ws.on('message', function (data) {
+    console.log('Received', data.toString())
+
+    //echo back to client
+    ws.send('Server received: ${data}');
+  })
+  ws.on('close', () => {
+    console.log('Client disconnected');
+  });
+  ws.on('error', (error) => {
+    console.error('WebSocket error:', error);
+  });
+});
+
+console.log("Initializing Websocket");
 
 // listen for requests
 app.listen(3000);
