@@ -4,6 +4,7 @@ const express = require('express');
 const morgan = require('morgan');
 const http = require('http');
 const WebSocket = require('ws')
+const PORT = 3000;
 
 // express app
 const app = express();
@@ -22,10 +23,12 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use((req, res, next) => {
-  console.log('in the next middleware');
+function validateAddParams(req, res, next) {
+  if (!req.query.a || !req.query.b) {
+    return res.status(400).json({ error: "Both a and b are required" });
+  }
   next();
-});
+}
 
 app.use(morgan('dev'));
 
@@ -60,14 +63,9 @@ app.get('/project', (req, res) => {
   res.render('project', { title: 'Project' });
 });
 
-app.get('/api/add', (req, res,) => {
-
-  if (!req.query.a || !req.query.b) {
-    return res.status(400).json({ error: "Both a and b are required" });
-  }
+app.get('/api/add', validateAddParams, (req, res,) => {
   let numA = parseInt(req.query.a);
   let numB = parseInt(req.query.b);
-
   let result = numA + numB;
   res.json({"result" : result});
 
@@ -79,8 +77,9 @@ app.use((req, res) => {
 });
 
 
+//websocket server-side
 const server = http.createServer(app);
-const ww = new WebSocket.Server({ server });
+const wss = new WebSocket.Server({ server });
 
 wss.on('connection', (ws) => {
   console.log('client connnected');
@@ -88,7 +87,7 @@ wss.on('connection', (ws) => {
     console.log('Received', data.toString())
 
     //echo back to client
-    ws.send('Server received: ${data}');
+    ws.send('Server received: ' + data);
   })
   ws.on('close', () => {
     console.log('Client disconnected');
@@ -101,4 +100,7 @@ wss.on('connection', (ws) => {
 console.log("Initializing Websocket");
 
 // listen for requests
-app.listen(3000);
+server.listen(PORT, () => {
+  console.log(`Server Running on http://localhost:${PORT}`);
+});
+

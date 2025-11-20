@@ -23,7 +23,7 @@
         <h2>Test /api/add</h2>
         <input type="number" id="addA" placeholder="a" />
         <input type="number" id="addB" placeholder="b" />
-        <button id="btnAdd">Calculate</button>
+        <button id="btnAdd">Calculate and View Result</button>
         <p id="addResult"></p>
       </section>
 
@@ -45,6 +45,11 @@
       <!-- WEBSOCKET HOOK -->
       <section id="ws-status">
         <h2>Live Updates</h2>
+        <p>Status: <span id="wsStatus">Connecting...</span></p>
+        <div>
+          <input type="text" id="wsInput" placeholder="Type a message...."/>
+          <button id="wsSendBtn">Send</button>
+        </div>
         <div id="wsMessages"></div>
       </section>
     </section>

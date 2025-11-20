@@ -38,7 +38,6 @@ window.addEventListener("beforeunload", () => {
     if (tipInterval) clearInterval(tipInterval);
 });
 
-
 //WEBSOCKET CLIENT-SIDE
 
 let projectSocket;
@@ -48,17 +47,22 @@ function initWebSocket() {
     
     projectSocket.onopen = () => {
         console.log('Connected to WebSocket server');
+        document.getElementById('wsStatus').textContent = 'Connected';
+        document.getElementById('wsStatus').style.color = 'green';
     };
    
     projectSocket.onmessage = (event) => {
     // Runs when server sends you data
         const box = document.getElementById("wsMessages");
+        if(!box) return;
         box.innerHTML += `<p>${event.data}</p>`;
     };
 
     projectSocket.onclose = () => {
         // Runs when connection closes
         console.log('WebSocket disconnected');
+        document.getElementById('wsStatus').textContent = 'Disconnected';
+        document.getElementById('wsStatus').style.color = 'red';
     };
 
     projectSocket.onerror = (error) => {
@@ -67,3 +71,41 @@ function initWebSocket() {
     };
 }
 window.addEventListener('load', initWebSocket);
+
+
+document.getElementById('wsSendBtn')?.addEventListener('click', () => {
+    const input = document.getElementById('wsInput');
+    const message = input.value;
+
+
+    if (message.trim() && projectSocket && projectSocket.readyState === WebSocket.OPEN) {
+        projectSocket.send(message);
+        input.value = '';
+        const box = document.getElementById('wsMessages');
+        if (!box) return;
+        box.innerHTML += `<p>${message}</p>`;
+    }
+})
+
+
+//listen for, fetch, and display results of the calculation
+document.getElementById('btnAdd')?.addEventListener('click', () => {
+    const numA = document.getElementById('addA').value;
+    const numB = document.getElementById('addB').value;
+
+    const url = `/api/add?a=${numA}&b=${numB}`;
+    fetch(url) 
+        .then(response => response.json())
+        .then(data => {
+            const resultElement = document.getElementById('addResult');
+            if (resultElement) {
+                resultElement.textContent = `Result: ${data.result}`;
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+})
+
+
+
