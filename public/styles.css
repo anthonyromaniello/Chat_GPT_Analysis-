@@ -216,6 +216,20 @@ footer{
 }
 
 /* Education page layout */
+#education{
+  max-width: 1000px;
+  margin: 60px auto;
+}
+
+#education h1, #education.section-intro{
+  text-align: center;
+}
+
+#education .section-intro {
+  max-width: 900px;
+  margin: 0 auto 24px;
+}
+
 .education-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -253,4 +267,43 @@ footer{
   .education-grid {
     grid-template-columns: 1fr;
   }
+}
+
+
+/*Experience section*/
+#experience h1 {
+  text-align: auto;
+}
+
+#experience {
+  max-width: 1000px;
+  margin: 60px auto;
+}
+
+#experience h1,
+#experience .section-intro {
+  text-align: center;
+}
+
+#experience .section-intro {
+  max-width: 900px;
+  margin: 0 auto 24px;
+}
+
+
+.exp-card {
+  background: rgba(223, 229, 230, 0.9);  
+  padding: 20px 24px;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  max-width: 900px;
+  margin: 24px auto 0;
+}
+
+.exp-card h2 {
+  margin-bottom: 10px;
+}
+
+.exp-card p + p {
+  margin-top: 8px;
 }
