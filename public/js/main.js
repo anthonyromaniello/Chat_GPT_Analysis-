@@ -87,7 +87,6 @@ document.getElementById('wsSendBtn')?.addEventListener('click', () => {
     }
 })
 
-
 //listen for, fetch, and display results of the calculation
 document.getElementById('btnAdd')?.addEventListener('click', () => {
     const numA = document.getElementById('addA').value;
@@ -107,35 +106,3 @@ document.getElementById('btnAdd')?.addEventListener('click', () => {
         });
 })
 
-
-//Simple hash-based routing
-
-const routes =['home', 'education','experience','project'];
-
-function showRoute(route){
-    if (!routes.includes(route)){
-        route = 'home';
-    }
-
-    //Show the corresponding section.
-    document.querySelectorAll('.route-section').forEach(sec =>{
-        sec.classList.toggle('active',sec.id===route);
-    });
-
-    //Highlight the nav link
-    document.querySelectorAll('nav a[data-route]').forEach(a =>{
-        a.classList.toggle('active',a.dataset.route===route);
-    });
-}
-
-function handleHashChange(){
-    const hash = window.location.hash || '#home';
-    const route = hash.replace('#','');
-    showRoute(route);
-}
-
-//Handle the current hash when the page is first loaded
-window.addEventListener('DOMContentLoaded',handleHashChange);
-
-//Listen hash changes
-window.addEventListener('hashchange', handleHashChange);
