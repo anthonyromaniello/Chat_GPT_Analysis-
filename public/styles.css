@@ -307,3 +307,55 @@ footer{
 .exp-card p + p {
   margin-top: 8px;
 }
+
+/*Project section*/
+#project{
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 20px;
+  text-align: center;
+}
+
+/*#project h1,#project h2, #project .section-intro,#project p{
+  text-align: center;
+}*/
+
+#project section{
+  margin-bottom: 24px;
+}
+
+#project h2{
+  margin-top: 24px;
+  font-size: 1.8em;
+  color: #333;
+}
+
+#project input[type="number"],
+#project input[type="text"],
+#project button {
+  width: 60%;
+  margin: 12px auto;
+  padding: 12px;
+  font-size: 1em;
+  box-sizing: border-box;
+  margin-top: 12px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  text-align: center;
+}
+
+#project button{
+  cursor: pointer;
+  background-color: #0066cc;
+  color: white;
+}
+
+#project button:hover{
+  background-color: #004d99;
+}
+
+#project canvas{
+  display: block;
+  margin-top: 24px;
+  max-width: 100%;
+}
