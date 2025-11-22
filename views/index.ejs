@@ -10,18 +10,20 @@
 </div>
 
 <main>
-<!--introduction-->
-  <section id="about" class="page-section">
+  <!--Home page-->
+  <section id ="home" class="route-section active">
+      <!--introduction-->
+      <section id="about" class="page-section">
     <h1>ChatGPT Efficiency Evaluation</h1>
     <p>This website is part of a course project that combines web design
           with an empirical evaluation of ChatGPT’s efficiency. The goal is to
           build an interactive site that presents how well ChatGPT performs
           across different domains and how its responses can be stored,
           analyzed, and visualized.</p>
-  </section>
+      </section>
 
-  <!--Profile section-->
-  <section id="profile" class="page-section">
+      <!--Profile section-->
+      <section id="profile" class="page-section">
     <h2>Project Team</h2>
     <div class="team-grid">
     
@@ -39,7 +41,7 @@
       <!--member 2-->
       <article class="team-member">
         <img src="/images/member2.png" alt="Member 2 photo" class="profile-photo"/>
-      <h3>Member 2</h3>
+      <h3>Anthony Romaniello</h3>
       <p>Responsible for server and API integration using Node.js, Express,
         and MongoDB. Implements backend routes, connects the site to the
         ChatGPT API, and manages data storage for prompts and responses.
@@ -55,15 +57,15 @@
         and response time across different domains.</p>
       </article>
     </div>  
-  </section>  
+      </section>  
 
-  <!--ChatGPT Evaluation Section-->
-  <section id="evaluation" class="page-section">
-    <h2>ChatGPT Evaluation Plan</h2>
+      <!--ChatGPT Evaluation Section-->
+      <section id="evaluation" class="page-section">
+        <h2>ChatGPT Evaluation Plan</h2>
 
-    <div class="evaluation-grid">
-      <!-- Research Approach -->
-      <article class="evaluation-card">
+        <div class="evaluation-grid">
+        <!-- Research Approach -->
+          <article class="evaluation-card">
         <h3>Research Approach</h3>
         <p> Our project follows an end-to-end web-based evaluation workflow.
             The front-end website is responsible for collecting user inputs,
@@ -83,10 +85,10 @@
           to build charts that compare accuracy and response time across
           multiple domains under the same experimental settings.
         </p>
-      </article>
+          </article>
       
-      <!--Dataset Overview-->
-      <article class="evaluation-card">
+          <!--Dataset Overview-->
+          <article class="evaluation-card">
         <h3>Dataset overview</h3>
         <p>
           The dataset is organized into three main domains: History, Social
@@ -107,10 +109,10 @@
           stored dataset to calculate accuracy scores, measure response
           times, and prepare the input needed for plotting charts.
         </p>
-      </article>
+          </article>
       
-      <!--Results Secction-->
-      <article class="evaluation-card">
+          <!--Results Section-->
+          <article class="evaluation-card">
         <h3>Results Section</h3>
         <p>
           The results section of the website is designed to present the
@@ -132,19 +134,18 @@
           explore.
         </p>
 
-      </article>
-    </div>
-  </section>  
+          </article>
+        </div>
+      </section>  
 
-  <!--Chart placehoders for later(part2)-->
-  <section id="results-placeholders" class="page-section">
-    <h2>Results (Chart placehoders)</h2>
-      <p>
+      <!--Chart placehoders for later(part2)-->
+      <section id="results-placeholders" class="page-section">
+        <h2>Results (Chart placehoders)</h2>
+          <p>
         The following placeholders are reserved for future visualizations
         using Chart.js or a similar library in Part 2 of the project.
-      </p>
-
-    <div class="chart-grid">
+          </p>
+        <div class="chart-grid">
       <article class="chart-card">
         <h3>Accuracy by Domain</h3>
           <canvas id="accuracyChart"></canvas>
@@ -161,6 +162,25 @@
         </article>
         </div>
       </section>
+  </section>
+
+  <!--Education page-->
+  <section id="education" class="route-section">
+    <h1>Education</h1>
+    <p>education.ejs</p>
+  </section>
+
+  <!--Experience page-->
+  <section id="experience" class="route-section">
+    <h1>Experience</h1>
+    <p>experience page</p>
+  </section>
+
+  <!--project page-->
+  <section id="project" class="route-section">
+    <h1>Project</h1>
+    <p>project</p>
+  </section>
 </main>
 
 <%- include("./partials/footer.ejs") %>
