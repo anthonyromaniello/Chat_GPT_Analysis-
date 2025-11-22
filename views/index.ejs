@@ -10,10 +10,157 @@
 </div>
 
 <main>
-  <section id="about">
-    <h1>Home page</h1>
-    <p>Evaluate ChatGPT efficieny across domain.</p>
+<!--introduction-->
+  <section id="about" class="page-section">
+    <h1>ChatGPT Efficiency Evaluation</h1>
+    <p>This website is part of a course project that combines web design
+          with an empirical evaluation of ChatGPT’s efficiency. The goal is to
+          build an interactive site that presents how well ChatGPT performs
+          across different domains and how its responses can be stored,
+          analyzed, and visualized.</p>
   </section>
+
+  <!--Profile section-->
+  <section id="profile" class="page-section">
+    <h2>Project Team</h2>
+    <div class="team-grid">
+    
+      <!--member 1-->
+      <article class="team-member">
+      <!--photograph-->
+        <img src="/images/member1.png" alt="profile photo" class="profile-photo"/>  
+        <h3>Xinyu Jing</h3>
+        <p>Responsible for website structure and front-end design. Focuses on
+          HTML, CSS, and client-side JavaScript to create a clean layout and
+          a consistent user experience for the evaluation website.
+        </p>
+      </article>
+
+      <!--member 2-->
+      <article class="team-member">
+        <img src="/images/member2.png" alt="Member 2 photo" class="profile-photo"/>
+      <h3>Member 2</h3>
+      <p>Responsible for server and API integration using Node.js, Express,
+        and MongoDB. Implements backend routes, connects the site to the
+        ChatGPT API, and manages data storage for prompts and responses.
+      </p> 
+      </article>
+
+      <!--member 3-->
+      <article class="team-member">
+        <img src="/images/member3.gif" alt="Member 3 photo" class="profile-photo"/>
+        <h3>Lucas Ng</h3>
+        <p>Responsible for visualization and analysis integration. Processes
+        the stored dataset and builds charts to summarize ChatGPT’s accuracy
+        and response time across different domains.</p>
+      </article>
+    </div>  
+  </section>  
+
+  <!--ChatGPT Evaluation Section-->
+  <section id="evaluation" class="page-section">
+    <h2>ChatGPT Evaluation Plan</h2>
+
+    <div class="evaluation-grid">
+      <!-- Research Approach -->
+      <article class="evaluation-card">
+        <h3>Research Approach</h3>
+        <p> Our project follows an end-to-end web-based evaluation workflow.
+            The front-end website is responsible for collecting user inputs,
+            organizing the different question sets, and presenting the results
+            in a clear and consistent layout. This includes the overall page
+            structure, navigation, and the visual placeholders for charts.
+        </p>
+        <p>
+          On the server side, Node.js and Express handle HTTP requests and
+          connect to MongoDB for storing prompts, ChatGPT responses, and
+          evaluation metrics. The website communicates with the ChatGPT API
+          to generate answers, and WebSockets are used to support real-time
+          updates during the evaluation process.
+        </p>
+        <p>
+          Finally, the visualization and analysis layer uses the stored data
+          to build charts that compare accuracy and response time across
+          multiple domains under the same experimental settings.
+        </p>
+      </article>
+      
+      <!--Dataset Overview-->
+      <article class="evaluation-card">
+        <h3>Dataset overview</h3>
+        <p>
+          The dataset is organized into three main domains: History, Social
+          Science, and Computer Security. Each domain contains a set of
+          well-defined questions that are designed to test ChatGPT on
+          factual knowledge, understanding of concepts, and problem-solving
+          ability.
+        </p>
+        <p>
+          The front-end structure helps group these questions by domain so
+          that they can be selected and submitted in a controlled way.
+          The server member prepares the scripts and API endpoints that
+          send these questions to ChatGPT and store the responses in
+          MongoDB.
+        </p>
+        <p>
+          The visualization and analysis member later works with this
+          stored dataset to calculate accuracy scores, measure response
+          times, and prepare the input needed for plotting charts.
+        </p>
+      </article>
+      
+      <!--Results Secction-->
+      <article class="evaluation-card">
+        <h3>Results Section</h3>
+        <p>
+          The results section of the website is designed to present the
+          outcome of the evaluation in a clear and interactive way.
+          The front-end member creates the layout and chart placeholders
+          so that the visualizations fit smoothly into the overall design
+          of the site.
+        </p>
+        <p>
+          Using the processed data from MongoDB, the visualization and
+          analysis member builds charts that compare accuracy and response
+          time across domains, and highlights patterns such as which
+          domain is easier or more challenging for ChatGPT.
+        </p>
+        <p>
+          Together, the three roles connect the full pipeline: from
+          question design and data collection, to backend processing, and
+          finally to visual presentation on the website for users to
+          explore.
+        </p>
+
+      </article>
+    </div>
+  </section>  
+
+  <!--Chart placehoders for later(part2)-->
+  <section id="results-placeholders" class="page-section">
+    <h2>Results (Chart placehoders)</h2>
+      <p>
+        The following placeholders are reserved for future visualizations
+        using Chart.js or a similar library in Part 2 of the project.
+      </p>
+
+    <div class="chart-grid">
+      <article class="chart-card">
+        <h3>Accuracy by Domain</h3>
+          <canvas id="accuracyChart"></canvas>
+      </article>
+
+      <article class="chart-card">
+        <h3>Average Response Time</h3>
+          <canvas id="timeChart"></canvas>
+        </article>
+
+        <article class="chart-card">
+          <h3>Summary Dashboard</h3>
+          <canvas id="summaryChart"></canvas>
+        </article>
+        </div>
+      </section>
 </main>
 
 <%- include("./partials/footer.ejs") %>
