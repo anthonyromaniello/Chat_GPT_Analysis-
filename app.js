@@ -3,8 +3,10 @@
 const express = require('express');
 const morgan = require('morgan');
 const http = require('http');
-const WebSocket = require('ws')
-const PORT = 3000;
+const WebSocket = require('ws');
+
+// Port configuration - uses Render's PORT environment variable or defaults to 3000
+const PORT = process.env.PORT || 3000;
 
 // express app
 const app = express();

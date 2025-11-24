@@ -1,14 +1,25 @@
 {
-  "name": "chat_gpt_analysis",
+  "name": "chatgpt-efficiency-analysis",
   "version": "1.0.0",
-  "description": "",
+  "description": "Interactive website to validate ChatGPT efficiency across different domains using Node.js, Express, WebSockets, and real-time data visualization",
   "main": "app.js",
   "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "chatgpt",
+    "express",
+    "websocket",
+    "node.js",
+    "web-application"
+  ],
+  "author": "Anthony Romaniello",
   "license": "ISC",
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "type": "commonjs",
   "dependencies": {
     "ejs": "^3.1.10",
