@@ -362,7 +362,7 @@ footer{
 
 /* Live Updates*/
 #wsMessages {
-  max-width: 700px;
+  max-width: 60%;
   margin: 24px auto 0;
   padding: 16px;
   background: #ddeaf8;
