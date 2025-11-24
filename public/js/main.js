@@ -43,7 +43,11 @@ window.addEventListener("beforeunload", () => {
 let projectSocket;
 
 function initWebSocket() {
-    projectSocket = new WebSocket('ws://localhost:3000');
+    // Use secure WebSocket (wss://) in production, ws:// locally
+    const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+    const wsUrl = `${protocol}//${window.location.host}`;
+    
+    projectSocket = new WebSocket(wsUrl);
     
     projectSocket.onopen = () => {
         console.log('Connected to WebSocket server');
