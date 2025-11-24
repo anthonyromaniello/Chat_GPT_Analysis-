@@ -359,3 +359,45 @@ footer{
   margin-top: 24px;
   max-width: 100%;
 }
+
+/* Live Updates*/
+#wsMessages {
+  max-width: 700px;
+  margin: 24px auto 0;
+  padding: 16px;
+  background: #ddeaf8;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  min-height: 120px;
+  max-height: 260px;
+  overflow-y: auto;
+
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+#wsMessages p {
+  padding: 8px 14px;
+  border-radius: 18px;
+  font-size: 0.95rem;
+  max-width: 80%;
+  word-wrap: break-word;
+  margin: 0;
+}
+
+/* Odd numbered ones (1st, 3rd, 5th...) : On the left, white bubbles, pretending to be servers */
+#wsMessages p:nth-child(odd) {
+  align-self: flex-start;
+  background: #ffffff;
+  border: 1px solid #c7d4e5;
+  color: #222;
+}
+
+/* Even-numbered items (2nd, 4th, 6th...) : On the right, blue bubbles, pretending to be sent by themselves */
+#wsMessages p:nth-child(even) {
+  align-self: flex-end;
+  background: #1f66d1;
+  color: #ffffff;
+}
+
