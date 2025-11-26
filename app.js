@@ -91,6 +91,10 @@ app.get('/project', (req, res) => {
   res.render('project', { title: 'Project' });
 });
 
+app.get('/results', (req, res) => {
+  res.render('results', { title: 'Results' });
+});
+
 app.get('/api/add', validateAddParams, (req, res,) => {
   let numA = parseInt(req.query.a);
   let numB = parseInt(req.query.b);
