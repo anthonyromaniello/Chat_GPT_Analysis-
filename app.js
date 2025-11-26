@@ -177,7 +177,7 @@ function validateProcessRequest(req, res, next) {
   next();
 }
 
-app.post('/api/process-questions', validateProcessRequest, async (req, res) => {
+app.get('/api/process-questions', validateProcessRequest, async (req, res) => {
   try {
     const { domain, limit = 10 } = req.query;
     
