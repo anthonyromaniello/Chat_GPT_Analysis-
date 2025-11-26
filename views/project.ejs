@@ -27,9 +27,25 @@
         <p id="addResult"></p>
       </section>
 
+      <!-- BACKEND HOOK: Import Questions -->
+      <section id="import-questions">
+        <h2>Import Questions to Database</h2>
+        <button id="btnImport">Import Questions</button>
+        <p id="importResult"></p>
+      </section>
+
       <!-- BACKEND HOOK: Start Evaluation -->
       <section id="evaluation-control">
         <h2>Run Evaluation</h2>
+        <label for="domainSelect">Domain:</label>
+        <select id="domainSelect">
+          <option value="">All Domains</option>
+          <option value="Computer Security">Computer Security</option>
+          <option value="Prehistory">Prehistory</option>
+          <option value="Sociology">Sociology</option>
+        </select>
+        <label for="limitInput">Limit:</label>
+        <input type="number" id="limitInput" value="5" min="1" max="100" />
         <button id="btnRunEval">Start Evaluation</button>
         <p id="evalStatus">Status: Idle</p>
       </section>

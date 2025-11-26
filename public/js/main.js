@@ -108,5 +108,65 @@ document.getElementById('btnAdd')?.addEventListener('click', () => {
         .catch(error => {
             console.error('Error:', error);
         });
-})
+});
+
+// Import questions button handler
+document.getElementById('btnImport')?.addEventListener('click', () => {
+    const resultElement = document.getElementById('importResult');
+    if (resultElement) {
+        resultElement.textContent = 'Importing questions...';
+    }
+
+    fetch('/api/import-questions')
+        .then(response => response.json())
+        .then(data => {
+            if (resultElement) {
+                if (data.success) {
+                    resultElement.textContent = `✅ ${data.message}. Total in DB: ${data.total}`;
+                } else {
+                    resultElement.textContent = `❌ Error: ${data.error}`;
+                }
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            if (resultElement) {
+                resultElement.textContent = `❌ Error importing questions: ${error.message}`;
+            }
+        });
+});
+
+// Run evaluation button handler
+document.getElementById('btnRunEval')?.addEventListener('click', () => {
+    const domain = document.getElementById('domainSelect')?.value || '';
+    const limit = document.getElementById('limitInput')?.value || 5;
+    const statusElement = document.getElementById('evalStatus');
+    
+    if (statusElement) {
+        statusElement.textContent = 'Status: Processing questions...';
+    }
+
+    let url = `/api/process-questions?limit=${limit}`;
+    if (domain) {
+        url += `&domain=${encodeURIComponent(domain)}`;
+    }
+
+    fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            if (statusElement) {
+                if (data.success) {
+                    statusElement.textContent = `✅ Status: Completed! Processed ${data.processed} of ${data.total} questions.`;
+                } else {
+                    statusElement.textContent = `❌ Status: Error - ${data.error}`;
+                }
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            if (statusElement) {
+                statusElement.textContent = `❌ Status: Error - ${error.message}`;
+            }
+        });
+});
 
