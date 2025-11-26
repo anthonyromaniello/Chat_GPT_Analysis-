@@ -1,32 +1,45 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Chat GPT Analysis Results</title>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <style>
-    body { font-family: Arial, sans-serif; margin: 20px; }
-    .container { max-width: 1200px; margin: 0 auto; }
-    canvas { max-width: 100%; }
-    #summary { background: #f0f0f0; padding: 15px; border-radius: 5px; margin: 20px 0; }
-    #answers { margin-top: 30px; }
-    .answer-item { margin-bottom: 20px; padding: 10px; border: 1px solid #ddd; border-radius: 3px; }
-  </style>
-</head>
+<%- include('partials/head') %>
 <body>
-  <div class="container">
-    <h1>Chat GPT Analysis Results</h1>
-    
-    <div id="summary"></div>
-    
-    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-      <div><canvas id="accuracyChart"></canvas></div>
-      <div><canvas id="timeChart"></canvas></div>
-    </div>
-    
-    <h2>Questions Preview</h2>
-    <div id="answers"></div>
-  </div>
+  <%- include('partials/nav') %>
+  
+  <main>
+    <div class="page-section">
+      <h1>Analysis Results</h1>
 
+      <!-- Summary Card -->
+      <div class="chart-card">
+        <h3>Summary Statistics</h3>
+        <div id="summary">
+          <p style="text-align: center;">Loading...</p>
+        </div>
+      </div>
+
+      <!-- Charts Grid -->
+      <div class="chart-grid">
+        <div class="chart-card">
+          <h3>Accuracy by Domain</h3>
+          <canvas id="accuracyChart"></canvas>
+        </div>
+        <div class="chart-card">
+          <h3>Response Time by Domain</h3>
+          <canvas id="timeChart"></canvas>
+        </div>
+      </div>
+
+      <!-- Questions Preview -->
+      <div style="margin-top: 40px;">
+        <h2>Questions Preview</h2>
+        <div class="evaluation-grid" id="answers">
+          <p style="text-align: center;">Loading...</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <%- include('partials/footer') %>
+  <script src="/js/main.js"></script>
   <script src="/js/results.js"></script>
 </body>
 </html>

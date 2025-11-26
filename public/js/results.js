@@ -1,4 +1,5 @@
-// public/js/results.js
+// public/js/results.js, Lucas Ng
+
 async function fetchResults() {
   try {
     const r = await fetch('/api/results');
@@ -71,40 +72,39 @@ function renderSummary(data) {
   }, domains[0]);
 
   document.getElementById('summary').innerHTML = `
-    <p><strong>Total processed:</strong> ${data.total_processed || 'N/A'}</p>
-    <p><strong>Average response time (all):</strong> ${avgAll} ms</p>
-    <p><strong>Fastest domain:</strong> ${fastestDomain}</p>
-    <p><strong>Highest accuracy (approx):</strong> ${bestAcc}</p>
+    <p><strong>Total Processed:</strong> ${data.total_processed || 'N/A'} questions</p>
+    <p><strong>Average Response Time:</strong> ${avgAll} ms</p>
+    <p><strong>Fastest Domain:</strong> ${fastestDomain}</p>
+    <p><strong>Highest Accuracy:</strong> ${bestAcc}</p>
   `;
 }
 
 async function renderAnswersPreview() {
   try {
-    const r = await fetch('/api/questions?limit=20'); // if your API supports limit, else fetch all
+    const r = await fetch('/api/questions?limit=20');
     const list = await r.json();
     const container = document.getElementById('answers');
     container.innerHTML = '';
     list.slice(0,20).forEach(q => {
       const el = document.createElement('div');
-      el.className = 'answer-item';
+      el.className = 'evaluation-card';
       el.innerHTML = `
-        <h4>${q.question}</h4>
-        <p><strong>Expected:</strong> ${q.expected_answer || '—'}</p>
-        <p><strong>ChatGPT:</strong> ${q.chatgpt_response || '<em>not processed</em>'}</p>
-        <p><small>Domain: ${q.domain} • time: ${q.response_time_ms ?? '—'} ms</small></p>
-        <hr>
+        <h3>${q.question}</h3>
+        <p><strong>Expected Answer:</strong> ${q.expected_answer || '—'}</p>
+        <p><strong>ChatGPT Response:</strong> ${q.chatgpt_response || '<em>not processed</em>'}</p>
+        <p><small>Domain: ${q.domain} • Response Time: ${q.response_time_ms ?? '—'} ms</small></p>
       `;
       container.appendChild(el);
     });
   } catch (err) {
     console.warn('Could not fetch questions:', err);
-    document.getElementById('answers').innerText = 'No preview available';
+    document.getElementById('answers').innerHTML = '<p>No preview available</p>';
   }
 }
 
 async function main() {
   const data = await fetchResults();
-  renderCharts(data);
+  drawCharts(data);
   renderSummary(data);
   renderAnswersPreview();
 }
