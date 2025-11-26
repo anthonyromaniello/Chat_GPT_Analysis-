@@ -9,35 +9,51 @@
       <h1>ChatGPT Efficiency Project</h1>
       
       <section>
-        <h2>Research Approach</h2>
-        <p>Node.js, MongoDB, WebSockets, and OpenAI API were used.</p>
+        <h2>Overview</h2>
+        <p>We compare ChatGPT’s performance across History, Social Science, and Computer Security tasks.</p>
       </section>
 
       <section>
-        <h2>Dataset Overview</h2>
-        <p>History, Social Science, and Computer Security.</p>
+        <h2>Tools & Setup</h2>
+        <p>This project uses Node.js, MongoDB, WebSockets, and the OpenAI API.</p>
       </section>
 
       <!-- BACKEND HOOK: Middleware /api/add -->
       <section id="api-add-test">
-        <h2>Test /api/add</h2>
+        <h2>Quick API Demo</h2>
         <input type="number" id="addA" placeholder="a" />
         <input type="number" id="addB" placeholder="b" />
-        <button id="btnAdd">Calculate and View Result</button>
+        <button id="btnAdd">Calculate</button>
         <p id="addResult"></p>
+      </section>
+
+      <!-- BACKEND HOOK: Import Questions -->
+      <section id="import-questions">
+        <h2>Import Questions to Database</h2>
+        <button id="btnImport">Import Questions</button>
+        <p id="importResult"></p>
       </section>
 
       <!-- BACKEND HOOK: Start Evaluation -->
       <section id="evaluation-control">
-        <h2>Run ChatGPT Evaluation</h2>
+        <h2>Run Evaluation</h2>
+        <label for="domainSelect">Domain:</label>
+        <select id="domainSelect">
+          <option value="">All Domains</option>
+          <option value="Computer Security">Computer Security</option>
+          <option value="Prehistory">Prehistory</option>
+          <option value="Sociology">Sociology</option>
+        </select>
+        <label for="limitInput">Limit:</label>
+        <input type="number" id="limitInput" value="5" min="1" max="100" />
         <button id="btnRunEval">Start Evaluation</button>
         <p id="evalStatus">Status: Idle</p>
       </section>
 
       <!-- VISUALIZATION HOOK -->
       <section id="results">
-        <h2>Results</h2>
-        <button id="btnLoadResults">Load Results</button>
+        <h2>Evaluation Results</h2>
+        <button id="btnLoadResults">Show Charts</button>
         <canvas id="accuracyChart"></canvas>
         <canvas id="timeChart"></canvas>
       </section>
