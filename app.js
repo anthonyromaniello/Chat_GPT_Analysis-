@@ -315,11 +315,6 @@ app.get('/api/results', async (req, res) => {
   }
 });
 
-// 404 page 
-app.use((req, res) => {
-  res.status(404).render('404', { title: '404' });
-});
-
 
 //websocket server-side
 const server = http.createServer(app);
@@ -364,6 +359,11 @@ wss.on('connection', (ws) => {
 });
 
 console.log("🔌 WebSocket server initialized");
+
+// 404 page - MUST be last route
+app.use((req, res) => {
+  res.status(404).render('404', { title: '404' });
+});
 
 // Server is started in the MongoDB connection promise above
 // No need for server.listen() here anymore
