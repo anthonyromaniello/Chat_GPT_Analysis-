@@ -144,14 +144,14 @@ document.getElementById('btnClearDatabase')?.addEventListener('click', () => {
 
     if (confirmButton) {
         if (cleardbStatusElement) {
-                    cleardbStatusElement.textContent = 'Status: Clearing database of ChatGPTs previous answers....';
+                    cleardbStatusElement.textContent = 'Status: Clearing database of ChatGPTs previous answers and loaded questions....';
                 }
         fetch("/api/clear-database")
             .then(response => response.json())
             .then (data => {
                 if (cleardbStatusElement) {
                     if (data.success) {
-                        cleardbStatusElement.textContent = `✅ Status: Completed! cleared database of all ${data.deleted} answers/processed questions.`;
+                        cleardbStatusElement.textContent = `✅ Status: Completed! cleared database of all questions.`;
                     } else {
                     statusElement.textContent = `❌ Status: Error - ${data.error}`;
                     }
