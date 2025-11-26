@@ -342,7 +342,11 @@ window.drawCharts = function(data) {
     
     // Insert before the button
     const button = document.getElementById('btnLoadResults');
-    resultsSection.insertBefore(summaryDiv, button);
+    const resultsSection = document.getElementById('results');
+    if (resultsSection && button){
+        const oldSummary =document.getElementById('summaryDashboard')
+        if(oldSummary)oldSummary.remove();
+        resultsSection.insertBefore(summaryDiv, button);}
 }
 
 // Load Results button handler

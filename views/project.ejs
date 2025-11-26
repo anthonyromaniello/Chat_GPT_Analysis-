@@ -37,6 +37,7 @@
         <!-- BACKEND HOOK: Start Evaluation -->
         <section id="evaluation-control">
         <h2>Run Evaluation</h2>
+        <div class="control-row">
         <label for="domainSelect">Domain:</label>
         <select id="domainSelect">
           <option value="">All Domains</option>
@@ -44,12 +45,22 @@
           <option value="Prehistory">Prehistory</option>
           <option value="Sociology">Sociology</option>
         </select>
+        </div>
+
+        <div class="input-group">
         <label for="limitInput">Limit:</label>
         <input type="number" id="limitInput" value="5" min="1" max="100" />
-        <button id="btnClearDatabase" style="background-color: #dc3545; margin-left: 10px;">Clear Database of previous answers </button>
-        <p id="clearStatus">Status: Idle</p>
-        <button id="btnRunEval">Start Evaluation</button>
-        <p id="evalStatus">Status: Idle</p>
+        </div>
+
+        <div class="button-row">
+          <button id="btnRunEval">Start Evaluation</button>
+          <button id="btnClearDatabase" class="btn-danger">Clear Database</button>
+        </div>
+
+        <div>
+          <p id="evalStatus">Status: Idle</p>
+          <p id="clearStatus" style="font-size: 0.9 em; opacity:0.8">(DB Status: Idle)</p>
+        </div>
         </section>
 
         <!-- VISUALIZATION HOOK -->
