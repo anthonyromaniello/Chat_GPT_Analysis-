@@ -136,6 +136,38 @@ document.getElementById('btnImport')?.addEventListener('click', () => {
         });
 });
 
+// Clear database button handler
+document.getElementById('btnClearDatabase')?.addEventListener('click', () => {
+
+    const confirmButton = confirm("Are you sure?");
+    cleardbStatusElement = document.getElementById("clearStatus");
+
+    if (confirmButton) {
+        if (cleardbStatusElement) {
+                    cleardbStatusElement.textContent = 'Status: Clearing database of ChatGPTs previous answers....';
+                }
+        fetch("/api/clear-database")
+            .then(response => response.json())
+            .then (data => {
+                if (cleardbStatusElement) {
+                    if (data.success) {
+                        cleardbStatusElement.textContent = `✅ Status: Completed! cleared database of all ${data.deleted} answers/processed questions.`;
+                    } else {
+                    statusElement.textContent = `❌ Status: Error - ${data.error}`;
+                    }
+                }
+            })
+    } else {
+        console.log("deletion cancelled");
+    }
+
+    // 2. Make a fetch() call to a new backend route (e.g., /api/clear-database)
+    // 3. Handle the response and display success/error message
+    // 4. Update the importResult element with the status
+    
+    console.log('Clear database button clicked - implement your logic here!');
+});
+
 // Run evaluation button handler
 document.getElementById('btnRunEval')?.addEventListener('click', () => {
     const domain = document.getElementById('domainSelect')?.value || '';
@@ -176,13 +208,14 @@ document.getElementById('btnRunEval')?.addEventListener('click', () => {
 let accuracyChart = null;
 let timeChart = null;
 
+   // Always show all domains, even if missing from backend
 // Draw charts function
 window.drawCharts = function(data) {
     // Destroy existing charts if they exist
     if (accuracyChart) accuracyChart.destroy();
     if (timeChart) timeChart.destroy();
 
-    // Extract data from API response
+    // Extract domains dynamically from backend data
     const domains = Object.keys(data.by_domain);
     const accuracies = domains.map(domain => data.by_domain[domain].accuracy);
     const avgTimes = domains.map(domain => data.by_domain[domain].avg_response_time);
@@ -278,21 +311,6 @@ window.drawCharts = function(data) {
                 }
             }
         });
-    }
-
-    // Display Summary Dashboard
-    displaySummary(data);
-};
-
-// Display summary statistics
-function displaySummary(data) {
-    const resultsSection = document.getElementById('results');
-    if (!resultsSection) return;
-
-    // Remove existing summary if present
-    let summaryDiv = document.getElementById('summaryDashboard');
-    if (summaryDiv) {
-        summaryDiv.remove();
     }
 
     // Create new summary dashboard

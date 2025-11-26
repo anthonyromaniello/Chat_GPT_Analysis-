@@ -181,6 +181,20 @@ function validateProcessRequest(req, res, next) {
   next();
 }
 
+app.get('/api/clear-database', async (req, res) => {
+
+  const Question = require('./models/question');  
+  
+    try {
+      await Question.deleteMany({});
+      
+      res.json({success: true, message: 'Database cleared!'});
+
+    } catch (err) {
+      res.status(500).json({ success: false, error: err.message });
+    }
+})
+
 app.get('/api/process-questions', validateProcessRequest, async (req, res) => {
   try {
     const { domain, limit = 10 } = req.query;

@@ -23,9 +23,9 @@ async function fetchResults() {
 function renderCharts(data) {
   const domains = Object.keys(data.by_domain);
   const accValues = domains.map(d => {
-    // If backend doesn't provide accuracy, use placeholder or compute later
+    // Backend returns accuracy as percentage already (0-100), not decimal
     return (data.by_domain[d].accuracy !== undefined)
-      ? Math.round(data.by_domain[d].accuracy * 100)
+      ? Math.round(data.by_domain[d].accuracy)
       : Math.round(Math.random() * 20 + 60);
   });
   const timeValues = domains.map(d => Math.round(data.by_domain[d].avg_response_time || data.by_domain[d].avg_response_time_ms || 0));
@@ -104,7 +104,7 @@ async function renderAnswersPreview() {
 
 async function main() {
   const data = await fetchResults();
-  drawCharts(data);
+  renderCharts(data);
   renderSummary(data);
   renderAnswersPreview();
 }
