@@ -22,21 +22,20 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY
 });
 
-// Connect to MongoDB
+// express app
+const app = express();
+
+// Create HTTP server (needed for WebSocket)
+const server = http.createServer(app);
+
+// Connect to MongoDB - but don't start server here yet
 mongoose.connect(dbURI)
   .then(() => {
     console.log('✅ Connected to MongoDB');
-    // Start server only after DB connection
-    server.listen(PORT, () => {
-      console.log(`🚀 Server running on http://localhost:${PORT}`);
-    });
   })
   .catch((err) => {
     console.error('❌ MongoDB connection error:', err);
   });
-
-// express app
-const app = express();
 
 // register view engine
 app.set('view engine', 'ejs');
@@ -317,7 +316,7 @@ app.get('/api/results', async (req, res) => {
 
 
 //websocket server-side
-const server = http.createServer(app);
+// server is already created at the top of the file
 const wss = new WebSocket.Server({ server });
 
 // Function to broadcast to all connected clients
@@ -365,5 +364,7 @@ app.use((req, res) => {
   res.status(404).render('404', { title: '404' });
 });
 
-// Server is started in the MongoDB connection promise above
-// No need for server.listen() here anymore
+// Start server
+server.listen(PORT, () => {
+  console.log(`🚀 Server running on port ${PORT}`);
+});
