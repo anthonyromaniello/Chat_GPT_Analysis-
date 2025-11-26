@@ -7,35 +7,35 @@
   <main>
     <section id="project">
       <h1>ChatGPT Efficiency Project</h1>
-      
-      <section>
+      <div class="project-grid">
+        <section>
         <h2>Overview</h2>
         <p>We compare ChatGPT’s performance across History, Social Science, and Computer Security tasks.</p>
-      </section>
+        </section>
 
-      <section>
+        <section>
         <h2>Tools & Setup</h2>
         <p>This project uses Node.js, MongoDB, WebSockets, and the OpenAI API.</p>
-      </section>
+        </section>
 
-      <!-- BACKEND HOOK: Middleware /api/add -->
-      <section id="api-add-test">
+        <!-- BACKEND HOOK: Middleware /api/add -->
+        <section id="api-add-test">
         <h2>Quick API Demo</h2>
         <input type="number" id="addA" placeholder="a" />
         <input type="number" id="addB" placeholder="b" />
         <button id="btnAdd">Calculate</button>
         <p id="addResult"></p>
-      </section>
+        </section>
 
-      <!-- BACKEND HOOK: Import Questions -->
-      <section id="import-questions">
+        <!-- BACKEND HOOK: Import Questions -->
+        <section id="import-questions">
         <h2>Import Questions to Database</h2>
         <button id="btnImport">Import Questions</button>
         <p id="importResult"></p>
-      </section>
+        </section>
 
-      <!-- BACKEND HOOK: Start Evaluation -->
-      <section id="evaluation-control">
+        <!-- BACKEND HOOK: Start Evaluation -->
+        <section id="evaluation-control">
         <h2>Run Evaluation</h2>
         <label for="domainSelect">Domain:</label>
         <select id="domainSelect">
@@ -48,18 +48,18 @@
         <input type="number" id="limitInput" value="5" min="1" max="100" />
         <button id="btnRunEval">Start Evaluation</button>
         <p id="evalStatus">Status: Idle</p>
-      </section>
+        </section>
 
-      <!-- VISUALIZATION HOOK -->
-      <section id="results">
+        <!-- VISUALIZATION HOOK -->
+        <section id="results">
         <h2>Evaluation Results</h2>
         <button id="btnLoadResults">Show Charts</button>
         <canvas id="accuracyChart"></canvas>
         <canvas id="timeChart"></canvas>
-      </section>
+        </section>
 
-      <!-- WEBSOCKET HOOK -->
-      <section id="ws-status">
+        <!-- WEBSOCKET HOOK -->
+        <section id="ws-status">
         <h2>Live Updates</h2>
         <p>Status: <span id="wsStatus">Connecting...</span></p>
         <div>
@@ -67,7 +67,8 @@
           <button id="wsSendBtn">Send</button>
         </div>
         <div id="wsMessages"></div>
-      </section>
+        </section>
+      </div>  
     </section>
   </main>
 
