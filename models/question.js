@@ -22,6 +22,10 @@ const questionSchema = new Schema({
     type: Number,
     default: null
   },
+  is_correct: {
+    type: Boolean,
+    default: null
+  },
   processed: {
     type: Boolean,
     default: false

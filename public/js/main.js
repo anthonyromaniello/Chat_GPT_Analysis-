@@ -170,3 +170,177 @@ document.getElementById('btnRunEval')?.addEventListener('click', () => {
         });
 });
 
+
+
+// Chart instances (to destroy and recreate)
+let accuracyChart = null;
+let timeChart = null;
+
+// Draw charts function
+window.drawCharts = function(data) {
+    // Destroy existing charts if they exist
+    if (accuracyChart) accuracyChart.destroy();
+    if (timeChart) timeChart.destroy();
+
+    // Extract data from API response
+    const domains = Object.keys(data.by_domain);
+    const accuracies = domains.map(domain => data.by_domain[domain].accuracy);
+    const avgTimes = domains.map(domain => data.by_domain[domain].avg_response_time);
+
+    // Draw Accuracy Bar Chart
+    const accuracyCtx = document.getElementById('accuracyChart');
+    if (accuracyCtx) {
+        accuracyChart = new Chart(accuracyCtx, {
+            type: 'bar',
+            data: {
+                labels: domains,
+                datasets: [{
+                    label: 'Accuracy (%)',
+                    data: accuracies,
+                    backgroundColor: [
+                        'rgba(75, 192, 192, 0.6)',
+                        'rgba(54, 162, 235, 0.6)',
+                        'rgba(255, 206, 86, 0.6)'
+                    ],
+                    borderColor: [
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)'
+                    ],
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'ChatGPT Accuracy by Domain',
+                        font: { size: 16 }
+                    },
+                    legend: {
+                        display: true
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100,
+                        title: {
+                            display: true,
+                            text: 'Accuracy Percentage'
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    // Draw Response Time Line Chart
+    const timeCtx = document.getElementById('timeChart');
+    if (timeCtx) {
+        timeChart = new Chart(timeCtx, {
+            type: 'line',
+            data: {
+                labels: domains,
+                datasets: [{
+                    label: 'Avg Response Time (ms)',
+                    data: avgTimes,
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    borderWidth: 3,
+                    tension: 0.4,
+                    fill: true,
+                    pointRadius: 6,
+                    pointHoverRadius: 8
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Response Time Analysis by Domain',
+                        font: { size: 16 }
+                    },
+                    legend: {
+                        display: true
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Milliseconds (ms)'
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    // Display Summary Dashboard
+    displaySummary(data);
+};
+
+// Display summary statistics
+function displaySummary(data) {
+    const resultsSection = document.getElementById('results');
+    if (!resultsSection) return;
+
+    // Remove existing summary if present
+    let summaryDiv = document.getElementById('summaryDashboard');
+    if (summaryDiv) {
+        summaryDiv.remove();
+    }
+
+    // Create new summary dashboard
+    summaryDiv = document.createElement('div');
+    summaryDiv.id = 'summaryDashboard';
+    summaryDiv.style.cssText = 'background: #f0f0f0; padding: 20px; margin: 20px 0; border-radius: 8px; border: 2px solid #ccc;';
+    
+    summaryDiv.innerHTML = `
+        <h3 style="margin-top: 0; color: #333;">📊 Summary Dashboard</h3>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+            <div style="background: white; padding: 15px; border-radius: 5px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                <div style="font-size: 24px; font-weight: bold; color: #4CAF50;">${data.total_processed}</div>
+                <div style="color: #666;">Total Questions Processed</div>
+            </div>
+            <div style="background: white; padding: 15px; border-radius: 5px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                <div style="font-size: 24px; font-weight: bold; color: #2196F3;">${data.overall_accuracy}%</div>
+                <div style="color: #666;">Overall Accuracy</div>
+            </div>
+            <div style="background: white; padding: 15px; border-radius: 5px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                <div style="font-size: 24px; font-weight: bold; color: #FF9800;">${data.avg_response_time_ms} ms</div>
+                <div style="color: #666;">Avg Response Time</div>
+            </div>
+            <div style="background: white; padding: 15px; border-radius: 5px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                <div style="font-size: 24px; font-weight: bold; color: #9C27B0;">${Object.keys(data.by_domain).length}</div>
+                <div style="color: #666;">Domains Tested</div>
+            </div>
+        </div>
+    `;
+    
+    // Insert before the button
+    const button = document.getElementById('btnLoadResults');
+    resultsSection.insertBefore(summaryDiv, button);
+}
+
+// Load Results button handler
+document.getElementById('btnLoadResults')?.addEventListener('click', () => {
+    fetch('/api/results')
+        .then(response => response.json())
+        .then(data => {
+            console.log('Results data:', data);
+            if (data.total_processed > 0) {
+                window.drawCharts(data);
+            } else {
+                alert('No processed questions found. Process some questions first!');
+            }
+        })
+        .catch(error => {
+            console.error('Error loading results:', error);
+            alert('Error loading results: ' + error.message);
+        });
+});

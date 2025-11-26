@@ -222,9 +222,13 @@ app.get('/api/process-questions', validateProcessRequest, async (req, res) => {
         const responseTime = Date.now() - startTime;
         const chatgptResponse = completion.choices[0].message.content;
         
+        // Simple accuracy check: case-insensitive comparison
+        const isCorrect = chatgptResponse.toLowerCase().includes(question.expected_answer.toLowerCase());
+        
         // Update question in database
         question.chatgpt_response = chatgptResponse;
         question.response_time_ms = responseTime;
+        question.is_correct = isCorrect;
         question.processed = true;
         question.processed_at = new Date();
         await question.save();
@@ -277,8 +281,10 @@ app.get('/api/results', async (req, res) => {
       });
     }
     
-    // Calculate metrics
+    // Calculate overall metrics
     const totalProcessed = allQuestions.length;
+    const totalCorrect = allQuestions.filter(q => q.is_correct).length;
+    const overallAccuracy = (totalCorrect / totalProcessed) * 100;
     const avgResponseTime = allQuestions.reduce((sum, q) => sum + (q.response_time_ms || 0), 0) / totalProcessed;
     
     // Group by domain
@@ -287,22 +293,30 @@ app.get('/api/results', async (req, res) => {
       if (!byDomain[q.domain]) {
         byDomain[q.domain] = {
           count: 0,
+          correct: 0,
+          accuracy: 0,
           avg_response_time: 0,
           total_time: 0
         };
       }
       byDomain[q.domain].count++;
       byDomain[q.domain].total_time += q.response_time_ms || 0;
+      if (q.is_correct) {
+        byDomain[q.domain].correct++;
+      }
     });
     
-    // Calculate domain averages
+    // Calculate domain averages and accuracy
     Object.keys(byDomain).forEach(domain => {
-      byDomain[domain].avg_response_time = byDomain[domain].total_time / byDomain[domain].count;
+      byDomain[domain].avg_response_time = Math.round(byDomain[domain].total_time / byDomain[domain].count);
+      byDomain[domain].accuracy = Math.round((byDomain[domain].correct / byDomain[domain].count) * 100);
       delete byDomain[domain].total_time;
     });
     
     res.json({
       total_processed: totalProcessed,
+      total_correct: totalCorrect,
+      overall_accuracy: Math.round(overallAccuracy),
       avg_response_time_ms: Math.round(avgResponseTime),
       by_domain: byDomain,
       oldest_processed: allQuestions[0].processed_at,
