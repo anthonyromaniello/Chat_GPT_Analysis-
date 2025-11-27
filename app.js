@@ -242,6 +242,55 @@ app.get('/api/process-questions', validateProcessRequest, async (req, res) => {
         
         // Simple accuracy check: case-insensitive comparison
         const isCorrect = chatgptResponse.toLowerCase().includes(question.expected_answer.toLowerCase());
+        //Answer the questions in the presentation
+        /*
+        // Simple accuracy check: case-insensitive comparison
+        console.log("\n--------- judgment ---------");
+        console.log("Question:", question.question);
+        console.log("Answer (Expected):", question.expected_answer);
+        console.log("AI(Actual):", chatgptResponse);
+
+        // Simple accuracy check: case-insensitive comparison
+        function cleanTokens(text) {
+          return text.toLowerCase()
+            .replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "")
+            .split(/\s+/)
+            .filter(w => w.length > 3);
+        }
+
+        const expectedTokens = cleanTokens(question.expected_answer);
+        const actualTokens = cleanTokens(chatgptResponse);
+        
+        let matchCount = 0;
+        let isCorrect= false;
+
+        // 2. Special Case Handling: "All of the above"
+        // Since the AI cannot see the multiple-choice options, we mark this as correct automatically.
+        if (question.expected_answer.toLowerCase().includes("all of the above")) {
+            console.log("Detected 'all of the above', marking correct automatically.");
+            isCorrect = true;
+            matchCount = 1; // Assign dummy match count
+        } else {
+            // 3. Calculate Matches
+            expectedTokens.forEach(token => {
+                // Use .includes() for fuzzy matching (e.g., 'perform' matches 'performativity')
+                if (actualTokens.some(t => t.includes(token) || token.includes(t))) {
+                    matchCount++;
+                }
+            });
+
+            // 4. Success Criteria: Pass if at least 1 core keyword matches
+            // For complex definitions (like Sociology), matching one core concept implies understanding.
+            isCorrect = matchCount >= 1;
+        }
+
+        // Debug Logs for terminal view
+        console.log(`Question: ${question.question.substring(0, 50)}...`);
+        console.log(`Expected Keywords: ${expectedTokens.join(", ")}`);
+        console.log(`AI Keywords: ${actualTokens.join(", ")}`);
+        console.log(`Matched: ${matchCount} -> Verdict: ${isCorrect ? '✅ PASS' : '❌ FAIL'}`);
+        console.log("--------------------------------------------------");
+        */
         
         // Update question in database
         question.chatgpt_response = chatgptResponse;
